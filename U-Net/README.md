@@ -89,6 +89,10 @@ U-Net technology
   
   Use the U-Net model to make some predictions on test dataset
   
+  Then mask the predicted ships on the map
+  
+  Finally compare the predicted ships with the ground truth
+  
   
   ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/Prediction.png)
   
