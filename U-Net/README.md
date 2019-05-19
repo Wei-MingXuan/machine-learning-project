@@ -21,3 +21,23 @@ U-Net technology
   Put the data into train and validation set.
   Set 1/5 of the dataset to be validation dataset.
   ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/splited%20data.png)
+  
+  Build Model
+  -------
+  Build a U-Net model to fit the dataset
+  ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/Model1.png)
+  ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/Model2.png)
+  
+  Train The Model
+  -----
+  Train the model, let the training processing break down when loss is low enough.
+  Finally, we get loss function
+  ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/Model_fit1.png)
+  ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/Model_fit2.png)
+  
+  
+  Make a Prediction
+  ------
+  Use the U-Net model to make some predictions on test dataset
+  ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/Prediction.png)
+  
