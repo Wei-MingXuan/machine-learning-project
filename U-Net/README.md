@@ -37,7 +37,9 @@ U-Net technology
  Split Dataset And Combination Mask With Original Pictures
   -----
   Put the data into train and validation set.
+  
   Set 1/5 of the dataset to be validation dataset.
+  
   
   ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/splited%20data.png)
   
