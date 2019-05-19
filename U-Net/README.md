@@ -101,7 +101,9 @@ U-Net technology
   ------
   
   
-  As you can see, in most situation, this model could make a prediction very precisely. However, it would mistake islands as ship. 
+  As you can see, in most situation, this model could make a prediction very precisely. 
+  
+  However, it would mistake islands as ships. 
   
   And it could not recognize the ships at the harbour.
   
