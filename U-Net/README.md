@@ -96,3 +96,12 @@ U-Net technology
   
   ![image](https://github.com/SiriusZhangyu/machine-learning-project/blob/patch-2/U-Net/Prediction.png)
   
+  
+  Summary
+  ------
+  
+  
+  As you can see, in most situation, this model could make a prediction very precisely. However, it would mistake islands as ship. 
+  
+  And it could not recognize the ships at the harbour.
+  
