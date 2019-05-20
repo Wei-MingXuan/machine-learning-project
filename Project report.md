@@ -81,7 +81,7 @@ Training
 
 At first, we process the data and get the model parameters.
 
-dp figure
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/U-Net_data_processing.jpg)
 
 *	Split dataset
 
