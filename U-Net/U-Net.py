@@ -189,6 +189,50 @@ loss_history = [seg_model.fit_generator(train_gen,
 samples = valid_df.groupby('ships').apply(lambda x: x.sample(1))
 fig, m_axs = plt.subplots(samples.shape[0], 4, figsize = (15, samples.shape[0]*4))
 [c_ax.axis('off') for c_ax in m_axs.flatten()]
+if IMG_SCALING is not None:
+    fullres_model = models.Sequential()
+    fullres_model.add(layers.AvgPool2D(IMG_SCALING, input_shape = (None, None, 3)))
+    fullres_model.add(seg_model)
+    fullres_model.add(layers.UpSampling2D(IMG_SCALING))
+else:
+    fullres_model = seg_model
+
+def masks_as_color(in_mask_list):
+    all_masks = np.zeros((768, 768), dtype = np.float)
+    scale = lambda x: (len(in_mask_list)+x+1) / (len(in_mask_list)*2) ## scale the heatmap image to shift 
+    for i,mask in enumerate(in_mask_list):
+        if isinstance(mask, str):
+            all_masks[:,:] += scale(i) * rle_decode(mask)
+    return all_masks
+def multi_rle_encode(img, **kwargs):
+    labels = label(img)
+    if img.ndim > 2:
+        return [rle_encode(np.sum(labels==k, axis=2), **kwargs) for k in np.unique(labels[labels>0])]
+    else:
+        return [rle_encode(labels==k, **kwargs) for k in np.unique(labels[labels>0])]
+
+def rle_encode(img, min_max_threshold=1e-3, max_mean_threshold=None):
+    if np.max(img) < min_max_threshold:
+        return '' ## no need to encode if it's all zeros
+    if max_mean_threshold and np.mean(img) > max_mean_threshold:
+        return '' ## ignore overfilled mask
+    pixels = img.T.flatten()
+    pixels = np.concatenate([[0], pixels, [0]])
+    runs = np.where(pixels[1:] != pixels[:-1])[0] + 1
+    runs[1::2] -= runs[::2]
+    return ' '.join(str(x) for x in runs)
+def raw_prediction(img, path=test_image_dir):
+    c_img = imread(os.path.join(path, c_img_name))
+    c_img = np.expand_dims(c_img, 0)/255.0
+    cur_seg = fullres_model.predict(c_img)[0]
+    return cur_seg, c_img[0]
+
+def smooth(cur_seg):
+    return binary_opening(cur_seg>0.99, np.expand_dims(disk(2), -1))
+
+def predict(img, path=test_image_dir):
+    cur_seg, c_img = raw_prediction(img, path=path)
+    return smooth(cur_seg), c_img
 
 for (ax1, ax2, ax3, ax4), c_img_name in zip(m_axs, samples.ImageId.values):
     first_seg, first_img = raw_prediction(c_img_name, train_image_dir)
