@@ -17,13 +17,13 @@ Theory of model
 ### VGG16
 VGG16 is a convolutional neural network model proposed by K. Simonyan and A. Zisserman from the University of Oxford in the paper “Very Deep Convolutional Networks for Large-Scale Image Recognition”. The model achieves 92.7% top-5 test accuracy in ImageNet, which is a dataset of over 14 million images belonging to 1000 classes. It was one of the famous model submitted to ILSVRC-2014. It makes the improvement over AlexNet by replacing large kernel-sized filters (11 and 5 in the first and second convolutional layer, respectively) with multiple 3×3 kernel-sized filters one after another. VGG16 was trained for weeks and was using NVIDIA Titan Black GPU’s.
 
-VGG16 figure1
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/VGG16_figure1.png)
 
 * The Architecture
 
 The input to cov1 layer is of fixed size 224 x 224 RGB image. The image is passed through a stack of convolutional (conv.) layers, where the filters were used with a very small receptive field: 3×3 (which is the smallest size to capture the notion of left/right, up/down, center). In one of the configurations, it also utilizes 1×1 convolution filters, which can be seen as a linear transformation of the input channels (followed by non-linearity). The convolution stride is fixed to 1 pixel; the spatial padding of conv. layer input is such that the spatial resolution is preserved after convolution, i.e. the padding is 1-pixel for 3×3 conv. layers. Spatial pooling is carried out by five max-pooling layers, which follow some of the conv.  layers (not all the conv. layers are followed by max-pooling). Max-pooling is performed over a 2×2 pixel window, with stride 2.
 
-VGG16 Architecture figure1
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/VGG16_Architechture_Figure1.jpg)
 
 Three Fully-Connected (FC) layers follow a stack of convolutional layers (which has a different depth in different architectures): the first two have 4096 channels each, the third performs 1000-way ILSVRC classification and thus contains 1000 channels (one for each class). The final layer is the soft-max layer. The configuration of the fully connected layers is the same in all networks.
 
@@ -33,7 +33,7 @@ All hidden layers are equipped with the rectification (ReLU) non-linearity. It i
 
 The ConvNet configurations are outlined in figure below. The nets are referred to their names (A-E). All configurations follow the generic design present in architecture and differ only in the depth: from 11 weight layers in the network A (8 conv. and 3 FC layers) to 19 weight layers in the network E (16 conv. and 3 FC layers). The width of conv. layers (the number of channels) is rather small, starting from 64 in the first layer and then increasing by a factor of 2 after each max-pooling layer, until it reaches 512.
 
-Configurations Figure 1
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/VGG16_Configurations_Figure1.jpg)
 
 ### U-Net
 
@@ -43,7 +43,7 @@ The network is trained in end-to-end fashion from very few images and outperform
 
 * The Architecture
 
-U-Net Architecture figure1
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/U-Net_Architecture_figure1.png)
 
 The network architecture is illustrated in figure above. It consists of a contracting path (left side) and an expansive path (right side). The contracting path follows the typical architecture of a convolutional network. It consists of the repeated application of two 3×3 convolutions (unpadded convolutions), each followed by a rectified linear unit (ReLU) and a 2×2 max pooling operation with stride 2 for downsampling.
 
@@ -53,11 +53,11 @@ At each downsampling step, feature channels are doubled. Every step in the expan
 
 The input images and their corresponding segmentation maps are used to train the network with the stochastic gradient descent. Due to the unpadded convolutions, the output image is smaller than the input by a constant border width. A pixel-wise soft-max computes the energy function over the final feature map combined with the cross-entropy loss function. The cross-entropy that penalizes at each position is defined as:
 
-formula figure1
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/formula_figure1.png)
 
 The separation border is computed using morphological operations. The weight map is then computed as:
 
-formula figure2
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/formula_figure2.png)
 
 where wc is the weight map to balance the class frequencies, d1 denotes the distance to the border of the nearest cell and d2 denotes the distance to the border of the second nearest cell.
 
@@ -81,7 +81,7 @@ Training
 
 At first, we process the data and get the model parameters.
 
-dp figure
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/U-Net_data_processing.jpg)
 
 *	Split dataset
 
@@ -95,15 +95,15 @@ decold all rlus in to images
 
 find and mask the ships
 
-combination figure1
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/combination_figure1.jpg)
 
 *	Build Model
 
 Build a U-Net model to fit the dataset
 
-model pic1
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/model_pic1.jpg)
 
-model pic2
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/model_pic2.jpg)
 
 * Train the data and get the loss history
 
@@ -111,9 +111,9 @@ Train the model, let the training processing break down when loss is low enough.
 
 Finally, we get loss function
 
-train pic1
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/train_pic1.jpg)
 
-train pic2
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/train_pic2.jpg)
 
 * Predict and visualize
 
@@ -123,9 +123,7 @@ Then mask the predicted ships on the map
 
 Finally compare the predicted ships with the ground truth
 
-Predict pic1
-
-Predict pic2
+![image](https://github.com/MuweiZ/machine-learning-project/blob/patch-3/Predict_pic1.png)
 
 Result analysis and comparison
 ---
